@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defenixa Security — Elite Cybersecurity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold:      #d4af37;
+            --gold-dim:  #a8882a;
+            --gold-glow: rgba(212,175,55,0.18);
+            --bg:        #07090f;
+            --bg2:       #0d1120;
+            --card:      #111827;
+            --border:    #1e2740;
+            --text:      #dde0ea;
+            --muted:     #7a849a;
+            --danger:    #e84040;
+            --warn:      #f5a623;
+            --ok:        #2ecc71;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Josefin Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed; top:0; left:0; width:100%; z-index:200;
+            padding: 1.4rem 6%;
+            background: rgba(7,9,15,0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content:space-between; align-items:center;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem; font-weight: 700;
+            letter-spacing: 3px; color: var(--gold);
+            text-transform: uppercase; text-decoration: none;
+        }
+        .logo-dot { color: var(--text); font-weight: 300; }
+        nav { display:flex; gap:2.5rem; }
+        nav a {
+            color: var(--muted); text-decoration:none; font-size:0.82rem;
+            text-transform:uppercase; letter-spacing:2px;
+            position:relative; transition:color .3s;
+        }
+        nav a::after {
+            content:''; position:absolute; bottom:-4px; left:0;
+            width:0; height:1px; background:var(--gold); transition:width .3s;
+        }
+        nav a:hover { color:var(--gold); }
+        nav a:hover::after { width:100%; }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 10rem 6% 6rem;
+            overflow: hidden;
+        }
+        /* animated noise grain overlay */
+        .hero::before {
+            content:''; position:absolute; inset:0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.35; pointer-events:none;
+        }
+        /* radial glow blobs */
+        .hero::after {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background:
+                radial-gradient(ellipse 60% 50% at 15% 60%, var(--gold-glow) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 85% 30%, rgba(60,80,200,.12) 0%, transparent 70%);
+        }
+        .hero-inner { position:relative; z-index:1; max-width:940px; margin:0 auto; }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items:center; gap:.8rem;
+            padding: .55rem 1.4rem;
+            border: 1px solid var(--gold-dim);
+            border-radius: 40px;
+            color: var(--gold); font-size:.78rem;
+            letter-spacing:3px; text-transform:uppercase;
+            margin-bottom:2.4rem;
+            animation: fadeUp .8s ease .1s both;
+        }
+        .hero-eyebrow span { width:6px; height:6px; border-radius:50%; background:var(--gold); display:inline-block; animation:pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 700; line-height: 1.08;
+            margin-bottom:1.8rem;
+            animation: fadeUp .8s ease .25s both;
+        }
+        .hero h1 em { font-style:italic; color:var(--gold); }
+        .hero p {
+            font-size:1.15rem; color:var(--muted); max-width:680px; margin:0 auto 3rem;
+            font-weight:300; letter-spacing:.3px;
+            animation: fadeUp .8s ease .4s both;
+        }
+        .btn-group { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; animation: fadeUp .8s ease .55s both; }
+        .btn {
+            display:inline-block; padding:1rem 2.6rem;
+            font-size:.82rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+            text-decoration:none; border-radius:3px; transition:all .3s;
+        }
+        .btn-primary { background:var(--gold); color:var(--bg); }
+        .btn-primary:hover { background:var(--gold-dim); transform:translateY(-3px); box-shadow:0 12px 30px rgba(212,175,55,.3); }
+        .btn-outline { border:1px solid var(--gold); color:var(--gold); }
+        .btn-outline:hover { background:var(--gold); color:var(--bg); transform:translateY(-3px); }
+
+        /* ─── SCROLLING TICKER ─── */
+        .ticker-wrap {
+            border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+            background:var(--bg2); overflow:hidden; padding:.85rem 0;
+        }
+        .ticker { display:flex; gap:0; animation:ticker 30s linear infinite; white-space:nowrap; }
+        .ticker-item {
+            display:inline-flex; align-items:center; gap:.6rem;
+            padding:0 2.5rem; font-size:.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+        }
+        .ticker-item .dot { width:4px; height:4px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+        @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* ─── SECTION COMMON ─── */
+        section { padding:7rem 6%; }
+        .sec-label {
+            display:block; font-size:.75rem; letter-spacing:3px; text-transform:uppercase;
+            color:var(--gold); margin-bottom:.8rem; font-weight:600;
+        }
+        .sec-title {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(2.2rem,5vw,3.6rem); font-weight:700; line-height:1.15;
+            margin-bottom:1.2rem;
+        }
+        .sec-sub { color:var(--muted); font-size:1.05rem; max-width:680px; line-height:1.85; }
+        .centered { text-align:center; margin-left:auto; margin-right:auto; }
+        .divider {
+            width:60px; height:2px; margin:2rem auto;
+            background:linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* ─── WHY US ─── */
+        #why { background:var(--bg2); }
+        .why-grid {
+            display:grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap:1.8rem; margin-top:4rem;
+        }
+        .why-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:2.8rem 2.2rem;
+            position:relative; overflow:hidden; transition:all .4s;
+        }
+        .why-card::before {
+            content:''; position:absolute; top:0; left:0;
+            width:100%; height:2px;
+            background:linear-gradient(90deg, var(--gold), transparent);
+            transform:scaleX(0); transform-origin:left; transition:transform .4s;
+        }
+        .why-card:hover { border-color:var(--gold-dim); transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+        .why-card:hover::before { transform:scaleX(1); }
+        .why-icon { font-size:2.6rem; margin-bottom:1.4rem; display:block; }
+        .why-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--gold); margin-bottom:.7rem; }
+        .why-card p { color:var(--muted); line-height:1.8; font-size:.97rem; }
+
+        /* ─── SERVICES ─── */
+        #services { background:var(--bg); }
+        .services-stack { display:grid; gap:1.4rem; margin-top:4rem; }
+        .svc-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:3rem 3rem;
+            display:grid; grid-template-columns:80px 1fr;
+            gap:2.2rem; align-items:start; transition:all .35s;
+        }
+        .svc-card:hover { border-color:var(--gold); transform:translateX(8px); box-shadow:0 10px 40px rgba(0,0,0,.35); }
+        .svc-num {
+            font-family:'Cormorant Garamond',serif; font-size:3.8rem;
+            color:var(--gold); opacity:.25; font-weight:700; line-height:1;
+        }
+        .svc-content h3 {
+            font-family:'Cormorant Garamond',serif; font-size:1.7rem;
+            color:var(--text); margin-bottom:.8rem;
+        }
+        .svc-content p { color:var(--muted); line-height:1.85; margin-bottom:1.2rem; }
+        .svc-tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+        .svc-tag {
+            padding:.3rem .9rem; border:1px solid var(--border);
+            border-radius:20px; font-size:.75rem; letter-spacing:1px;
+            color:var(--muted); text-transform:uppercase;
+        }
+
+        /* ─── CYBER AWARENESS ─── */
+        #awareness { background:var(--bg2); }
+        .awareness-intro { max-width:780px; margin:0 auto 5rem; }
+
+        /* stat bar */
+        .stat-bar {
+            display:grid;
+            grid-template-columns: repeat(4,1fr);
+            gap:1px; background:var(--border);
+            border:1px solid var(--border); border-radius:8px;
+            overflow:hidden; margin-bottom:5rem;
+        }
+        .stat-cell {
+            background:var(--card); padding:2.4rem 1.8rem; text-align:center;
+        }
+        .stat-num {
+            font-family:'Cormorant Garamond',serif;
+            font-size:3rem; font-weight:700; color:var(--danger); display:block; margin-bottom:.3rem;
+        }
+        .stat-lbl { color:var(--muted); font-size:.82rem; letter-spacing:1px; text-transform:uppercase; }
+
+        /* threat cards */
+        .threat-grid {
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(270px,1fr));
+            gap:1.5rem; margin-bottom:5rem;
+        }
+        .threat-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:2.2rem;
+            transition:all .35s; position:relative; overflow:hidden;
+        }
+        .threat-card:hover { border-color:var(--danger); transform:translateY(-5px); box-shadow:0 16px 40px rgba(232,64,64,.12); }
+        .tc-icon { font-size:2.4rem; margin-bottom:1.2rem; display:block; }
+        .threat-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--danger); margin-bottom:.7rem; }
+        .threat-card p { color:var(--muted); font-size:.94rem; line-height:1.8; margin-bottom:1rem; }
+        .badge {
+            display:inline-block; padding:.25rem .85rem; border-radius:20px;
+            font-size:.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+        }
+        .badge-red   { background:rgba(232,64,64,.15); color:var(--danger); }
+        .badge-amber { background:rgba(245,166,35,.15); color:var(--warn); }
+
+        /* dos / donts */
+        .dos-donts {
+            display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:5rem;
+        }
+        .dd-card {
+            background:var(--card); border-radius:6px; padding:2.8rem;
+            border:1px solid var(--border);
+        }
+        .dd-card.do  { border-left:4px solid var(--ok); }
+        .dd-card.dont { border-left:4px solid var(--danger); }
+        .dd-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; margin-bottom:1.5rem; }
+        .dd-card.do h3 { color:var(--ok); }
+        .dd-card.dont h3 { color:var(--danger); }
+        .dd-list { list-style:none; }
+        .dd-list li {
+            padding:.9rem 0 .9rem 2rem; position:relative;
+            color:var(--muted); border-bottom:1px solid var(--border); font-size:.96rem;
+        }
+        .dd-list li:last-child { border-bottom:none; }
+        .dd-list.do-list  li::before { content:'✓'; position:absolute; left:0; color:var(--ok);  font-weight:700; }
+        .dd-list.dont-list li::before { content:'✗'; position:absolute; left:0; color:var(--danger); font-weight:700; }
+
+        /* checklist */
+        .checklist-wrap {
+            background:var(--card); border:1px solid var(--border); border-radius:6px; padding:3rem;
+        }
+        .checklist-wrap h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--gold); margin-bottom:2rem; }
+        .cl-item {
+            display:flex; align-items:flex-start; gap:1.5rem;
+            padding:1.2rem 0; border-bottom:1px solid var(--border);
+        }
+        .cl-item:last-child { border-bottom:none; }
+        .cl-box {
+            width:22px; height:22px; border:2px solid var(--gold);
+            border-radius:4px; flex-shrink:0; margin-top:.15rem;
+            cursor:pointer; transition:background .2s;
+        }
+        .cl-box.checked { background:var(--gold); }
+        .cl-content h4 { color:var(--text); margin-bottom:.3rem; font-size:1rem; }
+        .cl-content p  { color:var(--muted); font-size:.9rem; }
+
+        /* ─── PROCESS ─── */
+        #process { background:var(--bg); }
+        .process-grid {
+            display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-top:4rem;
+        }
+        .proc-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:2.8rem; transition:all .35s;
+            display:flex; gap:2rem;
+        }
+        .proc-card:hover { border-color:var(--gold-dim); box-shadow:0 12px 35px rgba(0,0,0,.35); }
+        .proc-num {
+            font-family:'Cormorant Garamond',serif;
+            font-size:3.5rem; font-weight:700; color:var(--gold); opacity:.3; line-height:1; flex-shrink:0;
+        }
+        .proc-body h4 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold); margin-bottom:.6rem; }
+        .proc-body p  { color:var(--muted); line-height:1.8; font-size:.95rem; }
+
+        /* ─── ABOUT ─── */
+        #about { background:var(--bg2); }
+        .about-grid {
+            display:grid; grid-template-columns:1.1fr 1fr; gap:5rem; align-items:center; margin-top:3rem;
+        }
+        .about-text p { color:var(--muted); line-height:2; margin-bottom:1.4rem; font-size:1.02rem; }
+        .values { margin-top:2.5rem; display:grid; gap:1.5rem; }
+        .value-row { display:flex; gap:1.4rem; align-items:flex-start; }
+        .val-icon {
+            width:46px; height:46px; border-radius:8px; background:var(--gold);
+            display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0;
+        }
+        .value-row h4 { color:var(--gold); margin-bottom:.3rem; font-size:1rem; }
+        .value-row p  { color:var(--muted); font-size:.93rem; }
+        .about-stats { display:grid; gap:1.2rem; }
+        .as-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:2.2rem; transition:border-color .3s;
+        }
+        .as-card:hover { border-color:var(--gold-dim); }
+        .as-num { font-family:'Cormorant Garamond',serif; font-size:2.8rem; color:var(--gold); font-weight:700; margin-bottom:.3rem; }
+        .as-lbl { color:var(--muted); font-size:.88rem; line-height:1.6; }
+
+        /* ─── CONTACT ─── */
+        #contact { background:var(--bg); }
+        .contact-grid {
+            display:grid; grid-template-columns:1fr 1.3fr; gap:4rem; margin-top:3rem;
+        }
+        .contact-info h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--text); margin-bottom:1rem; }
+        .contact-info p  { color:var(--muted); line-height:1.9; margin-bottom:2rem; font-size:1rem; }
+        .email-block {
+            background:var(--card); border:1px solid var(--border); border-radius:6px;
+            padding:1.8rem 2rem; display:flex; align-items:center; gap:1rem;
+        }
+        .email-icon { font-size:1.5rem; }
+        .email-label { font-size:.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:.4rem; display:block; }
+        .email-img { display:block; max-width:100%; height:auto; filter:brightness(1.1); }
+
+        .contact-form {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:6px; padding:3rem;
+        }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-bottom:1.4rem; }
+        .form-group { margin-bottom:1.4rem; }
+        .form-group label {
+            display:block; margin-bottom:.5rem; color:var(--gold);
+            font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:600;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width:100%; padding:1rem 1.1rem;
+            background:var(--bg); border:1px solid var(--border);
+            border-radius:4px; color:var(--text);
+            font-family:'Josefin Sans',sans-serif; font-size:.96rem;
+            transition:border-color .3s, box-shadow .3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline:none; border-color:var(--gold);
+            box-shadow:0 0 0 3px var(--gold-glow);
+        }
+        .form-group textarea { resize:vertical; min-height:150px; }
+        .form-group select option { background:var(--bg); }
+        .btn-submit {
+            width:100%; padding:1.2rem;
+            background:var(--gold); color:var(--bg);
+            border:none; border-radius:4px;
+            font-family:'Josefin Sans',sans-serif;
+            font-weight:700; font-size:.88rem;
+            letter-spacing:2px; text-transform:uppercase;
+            cursor:pointer; transition:all .3s;
+        }
+        .btn-submit:hover { background:var(--gold-dim); transform:translateY(-2px); box-shadow:0 10px 28px rgba(212,175,55,.3); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top:1px solid var(--border); background:var(--bg);
+            padding:4rem 6% 3rem;
+        }
+        .footer-grid {
+            display:grid; grid-template-columns:1.6fr 1fr 1fr;
+            gap:4rem; margin-bottom:3rem;
+        }
+        .footer-logo {
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.8rem; color:var(--gold); font-weight:700;
+            letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; display:block;
+        }
+        .footer-brand p { color:var(--muted); font-size:.94rem; line-height:1.8; }
+        .footer-col h4 {
+            color:var(--text); font-size:.78rem; letter-spacing:2px;
+            text-transform:uppercase; margin-bottom:1.4rem;
+        }
+        .footer-col ul { list-style:none; }
+        .footer-col li { margin-bottom:.7rem; }
+        .footer-col a { color:var(--muted); text-decoration:none; font-size:.94rem; transition:color .3s; }
+        .footer-col a:hover { color:var(--gold); }
+        .footer-bottom {
+            border-top:1px solid var(--border); padding-top:2rem;
+            text-align:center; color:var(--muted); font-size:.82rem; letter-spacing:.5px;
+        }
+
+        /* ─── UTILITIES ─── */
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .fade-in { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+        .fade-in.visible { opacity:1; transform:translateY(0); }
+
+        /* ─── HAMBURGER MENU ─── */
+        .hamburger {
+            display:none; flex-direction:column; gap:5px;
+            cursor:pointer; padding:6px; z-index:300;
+        }
+        .hamburger span {
+            display:block; width:26px; height:2px;
+            background:var(--gold); border-radius:2px;
+            transition:all .35s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+        .mobile-nav {
+            display:none; position:fixed; inset:0; z-index:250;
+            background:rgba(7,9,15,0.98);
+            backdrop-filter:blur(20px);
+            flex-direction:column; align-items:center; justify-content:center;
+            gap:2.8rem;
+        }
+        .mobile-nav.open { display:flex; }
+        .mobile-nav a {
+            color:var(--text); text-decoration:none;
+            font-size:1.6rem; font-family:'Cormorant Garamond',serif;
+            font-weight:600; letter-spacing:3px; text-transform:uppercase;
+            transition:color .3s;
+        }
+        .mobile-nav a:hover { color:var(--gold); }
+        .mobile-nav .close-btn {
+            position:absolute; top:1.5rem; right:6%;
+            font-size:2rem; color:var(--muted); cursor:pointer;
+            background:none; border:none; line-height:1;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media(max-width:1024px) {
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .threat-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-grid { grid-template-columns: 1fr; }
+        }
+
+        @media(max-width:768px) {
+            /* Header */
+            header { padding:1.1rem 5%; }
+            .logo { font-size:1.6rem; letter-spacing:2px; }
+            nav { display:none; }
+            .hamburger { display:flex; }
+
+            /* Sections */
+            section { padding:4rem 5%; }
+
+            /* Hero */
+            .hero { padding:8rem 5% 5rem; min-height:95vh; }
+            .hero h1 { font-size:clamp(2.2rem,8vw,3rem); line-height:1.15; }
+            .hero p { font-size:1rem; margin-bottom:2.2rem; }
+            .hero-eyebrow { font-size:.7rem; padding:.45rem 1rem; margin-bottom:1.8rem; }
+            .btn { padding:.9rem 1.8rem; font-size:.78rem; }
+            .btn-group { gap:.9rem; flex-direction:column; align-items:center; }
+            .btn { width:100%; max-width:280px; text-align:center; }
+
+            /* Section headings */
+            .sec-title { font-size:clamp(1.8rem,6vw,2.5rem); }
+            .sec-sub { font-size:.97rem; }
+
+            /* Why grid */
+            .why-grid { grid-template-columns:1fr; gap:1.2rem; margin-top:2.5rem; }
+            .why-card { padding:2rem 1.6rem; }
+
+            /* Services */
+            .svc-card { grid-template-columns:1fr; gap:.8rem; padding:2rem 1.6rem; }
+            .svc-num { font-size:2.5rem; opacity:.2; }
+            .svc-content h3 { font-size:1.4rem; }
+
+            /* Stats bar */
+            .stat-bar { grid-template-columns:1fr 1fr; }
+            .stat-num { font-size:2.2rem; }
+            .stat-cell { padding:1.6rem 1rem; }
+
+            /* Threat grid */
+            .threat-grid { grid-template-columns:1fr; gap:1.2rem; }
+
+            /* Dos & Donts */
+            .dos-donts { grid-template-columns:1fr; gap:1.2rem; }
+            .dd-card { padding:2rem 1.6rem; }
+
+            /* Checklist */
+            .checklist-wrap { padding:2rem 1.4rem; }
+            .cl-item { gap:1rem; padding:.9rem 0; }
+
+            /* Process */
+            .process-grid { grid-template-columns:1fr; gap:1.2rem; margin-top:2.5rem; }
+            .proc-card { padding:2rem 1.6rem; gap:1.2rem; }
+            .proc-num { font-size:2.8rem; }
+
+            /* About */
+            .about-grid { grid-template-columns:1fr; gap:2.5rem; margin-top:2rem; }
+            .about-stats { grid-template-columns:1fr 1fr; gap:1rem; }
+            .as-card { padding:1.5rem; }
+            .as-num { font-size:2rem; }
+            .values { gap:1.2rem; }
+            .val-icon { width:38px; height:38px; font-size:1.1rem; flex-shrink:0; }
+
+            /* Contact */
+            .contact-grid { grid-template-columns:1fr; gap:2rem; margin-top:2rem; }
+            .form-row { grid-template-columns:1fr; gap:0; }
+            .contact-form { padding:2rem 1.4rem; }
+            .contact-info h3 { font-size:1.6rem; }
+            .email-block { padding:1.3rem; flex-wrap:wrap; gap:.7rem; }
+            .email-img { max-width:260px; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns:1fr; gap:2.5rem; margin-bottom:2rem; }
+            footer { padding:3rem 5% 2rem; }
+            .footer-logo { font-size:1.5rem; }
+
+            /* Ticker */
+            .ticker-item { padding:0 1.5rem; font-size:.72rem; }
+        }
+
+        @media(max-width:400px) {
+            .hero h1 { font-size:2rem; }
+            .stat-bar { grid-template-columns:1fr; }
+            .about-stats { grid-template-columns:1fr; }
+            .sec-title { font-size:1.7rem; }
+            .svc-tags { gap:.4rem; }
+            .svc-tag { font-size:.68rem; padding:.25rem .7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── MOBILE NAV OVERLAY ─── -->
+<div class="mobile-nav" id="mobileNav">
+    <button class="close-btn" id="closeNav" aria-label="Close menu">✕</button>
+    <a href="#services" class="mob-link">Services</a>
+    <a href="#awareness" class="mob-link">Awareness</a>
+    <a href="#process" class="mob-link">Process</a>
+    <a href="#about" class="mob-link">About</a>
+    <a href="#contact" class="mob-link">Contact</a>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+    <a href="#" class="logo">Defenixa<span class="logo-dot">.</span></a>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#awareness">Awareness</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-eyebrow"><span></span>Elite Cybersecurity Solutions</div>
+        <h1>Defending Your <em>Digital</em><br>Frontier</h1>
+        <p>Comprehensive security assessments, advanced penetration testing, and proactive threat analysis — precision-engineered to protect what matters most.</p>
+        <div class="btn-group">
+            <a href="#contact" class="btn btn-primary">Request Consultation</a>
+            <a href="#services" class="btn btn-outline">Explore Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span class="ticker-item"><span class="dot"></span>Vulnerability Assessment</span>
+        <span class="ticker-item"><span class="dot"></span>Penetration Testing</span>
+        <span class="ticker-item"><span class="dot"></span>Web Application Security</span>
+        <span class="ticker-item"><span class="dot"></span>Malware Analysis</span>
+        <span class="ticker-item"><span class="dot"></span>Mobile App Security</span>
+        <span class="ticker-item"><span class="dot"></span>Zero-Day Protection</span>
+        <span class="ticker-item"><span class="dot"></span>Threat Intelligence</span>
+        <span class="ticker-item"><span class="dot"></span>Security Audits</span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item"><span class="dot"></span>Vulnerability Assessment</span>
+        <span class="ticker-item"><span class="dot"></span>Penetration Testing</span>
+        <span class="ticker-item"><span class="dot"></span>Web Application Security</span>
+        <span class="ticker-item"><span class="dot"></span>Malware Analysis</span>
+        <span class="ticker-item"><span class="dot"></span>Mobile App Security</span>
+        <span class="ticker-item"><span class="dot"></span>Zero-Day Protection</span>
+        <span class="ticker-item"><span class="dot"></span>Threat Intelligence</span>
+        <span class="ticker-item"><span class="dot"></span>Security Audits</span>
+    </div>
+</div>
+
+<!-- ─── WHY US ─── -->
+<section id="why">
+    <div class="fade-in">
+        <span class="sec-label centered">Why Defenixa</span>
+        <h2 class="sec-title centered">Built on Excellence</h2>
+        <div class="divider"></div>
+        <p class="sec-sub centered">We combine cutting-edge methodology with deep human expertise to deliver security assessments that go beyond the surface.</p>
+    </div>
+    <div class="why-grid fade-in">
+        <div class="why-card">
+            <span class="why-icon">🎯</span>
+            <h3>Expert-Led</h3>
+            <p>Seasoned security professionals who understand attacker mindset — bridging the gap between automated tools and real-world threats.</p>
+        </div>
+        <div class="why-card">
+            <span class="why-icon">🔬</span>
+            <h3>Advanced Methodology</h3>
+            <p>Industry-standard frameworks enhanced with proprietary techniques for comprehensive, accurate threat detection.</p>
+        </div>
+        <div class="why-card">
+            <span class="why-icon">📊</span>
+            <h3>Actionable Reports</h3>
+            <p>Findings prioritized by business risk, with step-by-step remediation roadmaps designed for both technical and executive audiences.</p>
+        </div>
+        <div class="why-card">
+            <span class="why-icon">🔒</span>
+            <h3>Confidentiality First</h3>
+            <p>Strict data handling policies and signed NDAs ensure every engagement remains fully confidential.</p>
+        </div>
+        <div class="why-card">
+            <span class="why-icon">⚡</span>
+            <h3>Rapid Turnaround</h3>
+            <p>Critical vulnerabilities communicated immediately. Full reports delivered promptly without compromising quality.</p>
+        </div>
+        <div class="why-card">
+            <span class="why-icon">🤝</span>
+            <h3>True Partnership</h3>
+            <p>We align with your business objectives, risk tolerance, and compliance needs — working with you, not just for you.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+    <div class="fade-in">
+        <span class="sec-label">Our Services</span>
+        <h2 class="sec-title">Comprehensive Security<br>Solutions</h2>
+        <div class="divider" style="margin-left:0;"></div>
+        <p class="sec-sub">End-to-end cybersecurity services designed to identify vulnerabilities, assess risks, and fortify your digital infrastructure.</p>
+    </div>
+    <div class="services-stack fade-in">
+        <div class="svc-card">
+            <div class="svc-num">01</div>
+            <div class="svc-content">
+                <h3>Vulnerability Assessment</h3>
+                <p>Systematic identification and classification of security weaknesses across your entire technology stack. We combine automated scanning with manual verification to eliminate false positives and deliver actionable, prioritised findings.</p>
+                <div class="svc-tags">
+                    <span class="svc-tag">Network Scanning</span>
+                    <span class="svc-tag">App Vulnerabilities</span>
+                    <span class="svc-tag">Config Review</span>
+                    <span class="svc-tag">Risk Prioritisation</span>
+                </div>
+            </div>
+        </div>
+        <div class="svc-card">
+            <div class="svc-num">02</div>
+            <div class="svc-content">
+                <h3>Web Application Security Testing</h3>
+                <p>In-depth analysis of web applications covering OWASP Top 10, business logic flaws, authentication weaknesses, and API security. We examine every layer to ensure your online presence remains trustworthy and resilient.</p>
+                <div class="svc-tags">
+                    <span class="svc-tag">OWASP Top 10</span>
+                    <span class="svc-tag">Auth Testing</span>
+                    <span class="svc-tag">API Security</span>
+                    <span class="svc-tag">Session Management</span>
+                </div>
+            </div>
+        </div>
+        <div class="svc-card">
+            <div class="svc-num">03</div>
+            <div class="svc-content">
+                <h3>Penetration Testing (Authorised)</h3>
+                <p>Certified ethical hackers simulate real-world attacks on your systems to uncover exploitable weaknesses and validate your defensive controls — delivering clear evidence before a real attacker does.</p>
+                <div class="svc-tags">
+                    <span class="svc-tag">External / Internal</span>
+                    <span class="svc-tag">Social Engineering</span>
+                    <span class="svc-tag">Wireless</span>
+                    <span class="svc-tag">Post-Exploitation</span>
+                </div>
+            </div>
+        </div>
+        <div class="svc-card">
+            <div class="svc-num">04</div>
+            <div class="svc-content">
+                <h3>Malware & File Security Analysis</h3>
+                <p>Forensic examination of suspicious files and malware through static analysis, dynamic sandbox testing, and reverse engineering. We extract indicators of compromise and correlate with global threat intelligence.</p>
+                <div class="svc-tags">
+                    <span class="svc-tag">Static Analysis</span>
+                    <span class="svc-tag">Sandbox Testing</span>
+                    <span class="svc-tag">Reverse Engineering</span>
+                    <span class="svc-tag">IoC Extraction</span>
+                </div>
+            </div>
+        </div>
+        <div class="svc-card">
+            <div class="svc-num">05</div>
+            <div class="svc-content">
+                <h3>Mobile Application Security Review</h3>
+                <p>Comprehensive iOS and Android security assessments covering binary analysis, insecure data storage, weak cryptography, and API communication — ensuring your mobile apps meet the highest security standards.</p>
+                <div class="svc-tags">
+                    <span class="svc-tag">Binary Analysis</span>
+                    <span class="svc-tag">Data Storage</span>
+                    <span class="svc-tag">Network Comms</span>
+                    <span class="svc-tag">OWASP Mobile Top 10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CYBER AWARENESS ─── -->
+<section id="awareness">
+    <div class="awareness-intro fade-in centered">
+        <span class="sec-label centered">Cyber Awareness</span>
+        <h2 class="sec-title">Know Your Threats.<br>Stay Protected.</h2>
+        <div class="divider"></div>
+        <p class="sec-sub centered">Cybersecurity is not just a technology problem — it's a human one. Awareness is the first line of defence for any organisation or individual.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-bar fade-in">
+        <div class="stat-cell">
+            <span class="stat-num">95%</span>
+            <span class="stat-lbl">Breaches caused by human error</span>
+        </div>
+        <div class="stat-cell">
+            <span class="stat-num">$4.45M</span>
+            <span class="stat-lbl">Average cost of a data breach</span>
+        </div>
+        <div class="stat-cell">
+            <span class="stat-num">1 in 3</span>
+            <span class="stat-lbl">Organisations hit by ransomware yearly</span>
+        </div>
+        <div class="stat-cell">
+            <span class="stat-num">300+</span>
+            <span class="stat-lbl">Days to identify a breach on average</span>
+        </div>
+    </div>
+
+    <!-- Threat Cards -->
+    <div class="fade-in" style="margin-bottom:2rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; margin-bottom:.5rem;">Common Threats to Watch</h3>
+        <p style="color:var(--muted); margin-bottom:2.5rem;">Understanding how attackers operate is the first step in building a resilient defence.</p>
+    </div>
+    <div class="threat-grid fade-in">
+        <div class="threat-card">
+            <span class="tc-icon">🎣</span>
+            <h4>Phishing</h4>
+            <p>Fraudulent emails and messages designed to steal credentials or install malware by impersonating trusted sources.</p>
+            <span class="badge badge-red">Critical Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">🔒</span>
+            <h4>Ransomware</h4>
+            <p>Malicious software that encrypts files and demands payment. Even if paid, recovery is not guaranteed.</p>
+            <span class="badge badge-red">Critical Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">👥</span>
+            <h4>Man-in-the-Middle</h4>
+            <p>Attackers intercept communications between two parties — silently stealing data or injecting malicious content.</p>
+            <span class="badge badge-red">High Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">💉</span>
+            <h4>SQL Injection</h4>
+            <p>Malicious database commands injected through app inputs, exposing or destroying sensitive data.</p>
+            <span class="badge badge-red">High Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">⚡</span>
+            <h4>DDoS Attacks</h4>
+            <p>Floods of traffic overwhelm servers and websites, causing outages and significant financial damage.</p>
+            <span class="badge badge-amber">Medium Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">🎯</span>
+            <h4>Zero-Day Exploits</h4>
+            <p>Attacks targeting unknown vulnerabilities before any patch exists — no existing defence at time of attack.</p>
+            <span class="badge badge-red">Critical Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">🕵️</span>
+            <h4>Insider Threats</h4>
+            <p>Employees or partners misusing access — intentionally or accidentally compromising security.</p>
+            <span class="badge badge-amber">Medium Risk</span>
+        </div>
+        <div class="threat-card">
+            <span class="tc-icon">📱</span>
+            <h4>Mobile Threats</h4>
+            <p>Malicious apps, rogue Wi-Fi hotspots, and device vulnerabilities exposing personal and corporate data.</p>
+            <span class="badge badge-amber">Medium Risk</span>
+        </div>
+    </div>
+
+    <!-- Do's & Don'ts -->
+    <div class="fade-in" style="margin-bottom:2rem; margin-top:4rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; margin-bottom:.5rem;">Cyber Hygiene — Do's & Don'ts</h3>
+        <p style="color:var(--muted); margin-bottom:2.5rem;">Small habits make a significant difference in your security posture.</p>
+    </div>
+    <div class="dos-donts fade-in">
+        <div class="dd-card do">
+            <h3>✓ Always Do</h3>
+            <ul class="dd-list do-list">
+                <li>Verify the sender's email address carefully</li>
+                <li>Hover over links before clicking to preview the URL</li>
+                <li>Enable multi-factor authentication on all accounts</li>
+                <li>Use unique, strong passwords for every account</li>
+                <li>Keep software and firmware up to date</li>
+                <li>Back up critical data to offline storage regularly</li>
+                <li>Log out from accounts on shared devices</li>
+                <li>Report suspicious activity to your security team</li>
+                <li>Use a VPN on public or untrusted networks</li>
+                <li>Review account access and permissions periodically</li>
+            </ul>
+        </div>
+        <div class="dd-card dont">
+            <h3>✗ Never Do</h3>
+            <ul class="dd-list dont-list">
+                <li>Click links or download attachments from unknown senders</li>
+                <li>Share passwords — even with trusted colleagues</li>
+                <li>Reuse passwords across multiple platforms</li>
+                <li>Ignore security software update notifications</li>
+                <li>Connect to unsecured public Wi-Fi for sensitive tasks</li>
+                <li>Post sensitive information on social media</li>
+                <li>Disable security features for convenience</li>
+                <li>Act on emails that create urgency without verifying</li>
+                <li>Leave devices unattended or unlocked</li>
+                <li>Store passwords in plain text or browser notes</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="fade-in" style="margin-top:4rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:2rem; margin-bottom:.5rem;">Personal Security Checklist</h3>
+        <p style="color:var(--muted); margin-bottom:2.5rem;">Tick these off to audit your current security posture.</p>
+        <div class="checklist-wrap">
+            <h3>Essential Security Measures</h3>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Password Manager</h4><p>All accounts use strong, unique passwords stored in a reputable password manager</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Multi-Factor Authentication</h4><p>MFA enabled on email, banking, work systems, and social media</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Software Updates</h4><p>OS, applications, and firmware are current and auto-updates are enabled</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Security Software</h4><p>Antivirus / anti-malware installed, updated, and running with real-time protection</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Network Security</h4><p>Home Wi-Fi uses a strong password and WPA3 encryption</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Data Backups</h4><p>Regular automated backups to both cloud and offline storage</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Device Locking</h4><p>All devices lock automatically after inactivity with strong PIN or biometric</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Email Vigilance</h4><p>Phishing awareness practiced — links and attachments verified before opening</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Privacy Settings</h4><p>Social media and online accounts set to maximum privacy</p></div>
+            </div>
+            <div class="cl-item">
+                <div class="cl-box" onclick="this.classList.toggle('checked')"></div>
+                <div class="cl-content"><h4>Ongoing Awareness</h4><p>Staying informed on emerging threats and current best practices</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="process">
+    <div class="fade-in">
+        <span class="sec-label">Our Process</span>
+        <h2 class="sec-title">How We Work</h2>
+        <div class="divider" style="margin-left:0;"></div>
+        <p class="sec-sub">A structured, transparent approach delivering high-quality results with minimal disruption.</p>
+    </div>
+    <div class="process-grid fade-in">
+        <div class="proc-card">
+            <div class="proc-num">01</div>
+            <div class="proc-body">
+                <h4>Discovery & Scoping</h4>
+                <p>Initial consultation to understand your environment, objectives, and compliance requirements. We define scope, timelines, and a tailored assessment strategy.</p>
+            </div>
+        </div>
+        <div class="proc-card">
+            <div class="proc-num">02</div>
+            <div class="proc-body">
+                <h4>Reconnaissance</h4>
+                <p>Comprehensive intelligence gathering to map your attack surface, identify entry points, and understand your technology stack before testing begins.</p>
+            </div>
+        </div>
+        <div class="proc-card">
+            <div class="proc-num">03</div>
+            <div class="proc-body">
+                <h4>Active Assessment</h4>
+                <p>Hands-on testing using proven tools and manual techniques. Critical findings are communicated immediately — never held until the final report.</p>
+            </div>
+        </div>
+        <div class="proc-card">
+            <div class="proc-num">04</div>
+            <div class="proc-body">
+                <h4>Analysis & Reporting</h4>
+                <p>All findings documented with evidence, risk ratings, and prioritised remediation steps — crafted for both technical teams and executive stakeholders.</p>
+            </div>
+        </div>
+        <div class="proc-card">
+            <div class="proc-num">05</div>
+            <div class="proc-body">
+                <h4>Remediation Support</h4>
+                <p>Ongoing consultation to help your team address findings effectively, with re-testing available to validate fixes and confirm your improved security posture.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+    <div class="fade-in">
+        <span class="sec-label">About Us</span>
+        <h2 class="sec-title">Defenixa Security</h2>
+        <div class="divider" style="margin-left:0;"></div>
+    </div>
+    <div class="about-grid fade-in">
+        <div class="about-text">
+            <p>Defenixa Security is a specialised cybersecurity firm dedicated to protecting organisations from the ever-evolving landscape of digital threats. Our team comprises certified security professionals with deep expertise in offensive security, threat intelligence, and security architecture.</p>
+            <p>We stay at the forefront of emerging vulnerabilities and adversarial techniques — translating that knowledge into comprehensive, practical assessments that create real-world protection for our clients.</p>
+            <p>We believe security is a partnership. We work alongside our clients to understand their unique challenges and deliver solutions that align with their business objectives, risk appetite, and regulatory environment.</p>
+            <div class="values">
+                <div class="value-row">
+                    <div class="val-icon">🎓</div>
+                    <div>
+                        <h4>Continuous Learning</h4>
+                        <p>Staying ahead of evolving threats through ongoing research and professional development.</p>
+                    </div>
+                </div>
+                <div class="value-row">
+                    <div class="val-icon">💎</div>
+                    <div>
+                        <h4>Integrity First</h4>
+                        <p>The highest ethical standards in all testing activities and client relationships.</p>
+                    </div>
+                </div>
+                <div class="value-row">
+                    <div class="val-icon">🚀</div>
+                    <div>
+                        <h4>Innovation Driven</h4>
+                        <p>Leveraging cutting-edge tools and methodologies to deliver superior outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-stats">
+            <div class="as-card">
+                <div class="as-num">Certified</div>
+                <div class="as-lbl">Security Professionals<br>OSCP · CEH · CISSP credentials</div>
+            </div>
+            <div class="as-card">
+                <div class="as-num">100%</div>
+                <div class="as-lbl">Confidential engagements<br>Signed NDA on every project</div>
+            </div>
+            <div class="as-card">
+                <div class="as-num">Custom</div>
+                <div class="as-lbl">Tailored assessments<br>No cookie-cutter approaches</div>
+            </div>
+            <div class="as-card">
+                <div class="as-num">5</div>
+                <div class="as-lbl">Specialised service areas<br>Comprehensive digital coverage</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+    <div class="fade-in">
+        <span class="sec-label">Contact</span>
+        <h2 class="sec-title">Start Your Security<br>Journey</h2>
+        <div class="divider" style="margin-left:0;"></div>
+    </div>
+    <div class="contact-grid fade-in">
+        <div class="contact-info">
+            <h3>Let's Talk Security</h3>
+            <p>Ready to strengthen your security posture? Reach out for a confidential consultation. We'll discuss your needs, outline a tailored approach, and help you understand your real exposure before attackers do.</p>
+
+            <div class="email-block">
+                <span class="email-icon">✉</span>
+                <div>
+                    <span class="email-label">Email Us</span>
+                    <img class="email-img"
+                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAAA0CAYAAADv28CcAAAVqUlEQVR4nO3deXgTdf4H8Pfkbto0bRKS3lDpQWkpUMoph7gi54qAVsRdUFGU5VjFA4XFAxHW+wARFBWWwxOLXIoKVIogh1wtR1toS++0SdMcTXPP74+kmCalNKWrv5XP63l4HjrzzSefI5P5zHxnJgx85GcPlPkuI4QQQsifW9qkI/Xef3O8/6DkgBBCCLkx+eYAnKutIIQQQsgNxTsX4PguIIQQQsiNqzknYCg5IIQQQogvzrWLEEIIIeRGQwkCIYQQQvxQgkAIIYQQP5QgEEIIIcQPJQiEEEII8UMJAiGEEEL8UIJACCGEED+UIBBCCCHEDyUIhBBCCPFDCQIhhBBC/FCCQAghhBA/lCAQQgghxA8lCMRbFAAtgE2dEIsBMBvAYQBVnrgPdULc30MRQFOGQY4K9lYl+SMFQAtgUyfEYgDMBnAYQJUn7kOdEPf3UATgVCfEoxIEt0vXPwkjAAA="
+                         alt="info@defenixasecure.com">
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form id="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interest</label>
+                        <select id="service" name="service">
+                            <option value="">Select a service</option>
+                            <option>Vulnerability Assessment</option>
+                            <option>Web Application Security</option>
+                            <option>Penetration Testing</option>
+                            <option>Malware & File Analysis</option>
+                            <option>Mobile App Security</option>
+                            <option>General Consultation</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Describe your security needs or concerns..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <span class="footer-logo">DEFENIXA</span>
+            <p>Elite cybersecurity solutions for the modern enterprise. Protecting your digital assets with expertise, integrity, and innovation.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#services">Vulnerability Assessment</a></li>
+                <li><a href="#services">Web App Security</a></li>
+                <li><a href="#services">Penetration Testing</a></li>
+                <li><a href="#services">Malware Analysis</a></li>
+                <li><a href="#services">Mobile App Security</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#awareness">Cyber Awareness</a></li>
+                <li><a href="#process">Our Process</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; Defenixa Security. All Rights Reserved. &nbsp;|&nbsp; Confidential &amp; Professional Cybersecurity Services</p>
+    </div>
+</footer>
+
+<script>
+    // ─── Hamburger Menu ───
+    const hamburger  = document.getElementById('hamburger');
+    const mobileNav  = document.getElementById('mobileNav');
+    const closeNav   = document.getElementById('closeNav');
+
+    function openMenu()  { mobileNav.classList.add('open');  hamburger.classList.add('open');  document.body.style.overflow='hidden'; }
+    function closeMenu() { mobileNav.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow=''; }
+
+    hamburger.addEventListener('click', openMenu);
+    closeNav.addEventListener('click', closeMenu);
+
+    // Close when a nav link is clicked
+    document.querySelectorAll('.mob-link').forEach(a => {
+        a.addEventListener('click', () => {
+            closeMenu();
+        });
+    });
+
+    // ─── Smooth scroll for ALL anchor links ───
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const href = a.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const t = document.querySelector(href);
+            if (t) t.scrollIntoView({ behavior:'smooth' });
+        });
+    });
+
+    // ─── Scroll fade-in observer ───
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin:'0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ─── Form submit ───
+    document.getElementById('contact-form').addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Thank you! We will be in touch within 24 hours.');
+        e.target.reset();
+    });
+</script>
+</body>
+</html>
